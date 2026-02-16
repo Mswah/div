@@ -1,0 +1,36 @@
+name: Update Dividend ICS
+
+on:
+  schedule:
+    - cron: '0 12 * * *'  # Daily at 12:00 UTC (~5 AM MST); adjust as needed
+  workflow_dispatch:     # Lets you trigger manually from Actions tab
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install yfinance icalendar pytz
+
+      - name: Generate ICS
+        run: python generate_dividends_ics.py
+
+      - name: Commit and push if changed
+        run: |
+          git config --global user.name 'GitHub Action'
+          git config --global user.email 'action@github.com'
+          git add dividends.ics
+          git commit -m "Auto-update dividends.ics" || echo "No changes to commit"
+          git push
