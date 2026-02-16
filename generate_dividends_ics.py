@@ -8,6 +8,7 @@ import os
 tickers = ['GOOD', 'ARCC', 'GLAD', 'GAIN', 'MO', 'PFE', 'VZ', 'MAIN', 'O', 'PBA', 'AM', 'T', 'PM', 'SCHW', 'QYLD', 'SPYI', 'JEPI', 'DIVO', 'SCHD', 'SWVXX']
 
 cal = Calendar()
+cal.add('method', 'PUBLISH')
 cal.add('prodid', '-//Your Dividend Calendar//')
 cal.add('version', '2.0')
 cal.add('X-WR-CALNAME', 'Dividend Ex-Dates & Pays')
